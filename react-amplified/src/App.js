@@ -1,9 +1,7 @@
 import { useState } from 'react';
-import { Amplify, API, Auth, withSSRContext } from 'aws-amplify';
+import { Amplify, API } from 'aws-amplify';
 import awsExports from './aws-exports';
 import { createQuestionnaire } from './graphql/mutations';
-import { listPosts } from './graphql/queries';
-
 Amplify.configure({ ...awsExports, ssr: true });
 
 
@@ -19,7 +17,7 @@ function Questionnaire() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const { data } = await API.graphql({
+    await API.graphql({
       query: createQuestionnaire,
       variables: {
         input: {
